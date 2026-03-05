@@ -6,47 +6,51 @@ Esta VM de Azure expira el **6 de marzo de 2026**. Es CRÍTICO migrar todo antes
 
 ---
 
-## Estructura del Workspace
+## 📋 Índice
+
+1. [Qué es JUANITA](#qué-es-juanita)
+2. [Estructura del Backup](#estructura-del-backup)
+3. [Instrucciones de Instalación](#instrucciones-de-instalación)
+4. [Configuración Post-Instalación](#configuración-post-instalación)
+5. [API Keys Necesarias](#api-keys-necesarias)
+6. [Modelos Disponibles](#modelos-disponibles)
+7. [Skills Activos](#skills-activos)
+8. [Solución de Problemas](#solución-de-problemas)
+
+---
+
+## 🤖 Qué es JUANITA
+
+JUANITA es un asistente personal basado en OpenClaw que corre en una VM. Está configurada para:
+
+- Responder mensajes por Telegram
+- Ejecutar tareas automatizadas
+- Gestionar backups automáticos
+- Coordinar sub-agentes para tareas complejas
+
+---
+
+## 📁 Estructura del Backup
 
 ```
 ~/.openclaw/workspace/
-├── 📄 AGENTS.md          ← Guía del workspace (leer al inicio)
-├── 📄 README.md          ← Este archivo
-├── 📄 BOOTSTRAP.md       ← Secuencia de arranque (inyectado por OpenClaw)
 │
 ├── 📄 Archivos de configuración (raíz):
-│   ├── USER.md           ← Perfil de JEFESITO
-│   ├── IDENTITY.md       ← Identidad de JUANITA
-│   ├── MEMORY.md         ← Memoria de largo plazo
-│   ├── SOUL.md           ← Esencia y personalidad
-│   ├── TOOLS.md          ← Rate limits y configuración
-│   ├── SUBAGENTES.md     ← Registro de sub-agentes
-│   ├── SECURITY_PROTOCOL.md ← Protocolos de seguridad
-│   ├── APRENDIZAJE.md    ← Patrones aprendidos
-│   ├── APRENDIZAJE_ACTIVO.md ← Aprendizaje activo
-│   ├── SKILL_INVENTORY.md ← Inventario de 896 skills
-│   ├── HEARTBEAT.md      ← Tareas periódicas
-│   ├── BACKUP_AUTO.md    ← Protocolo de backup
-│   ├── RULES.md          ← Reglas inquebrantables
-│   ├── MIGRATION_GUIDE.md ← Guía de migración
-│   └── OPENCLAW_KNOWLEDGE.md ← Conocimiento de OpenClaw
+│   ├── AGENTS.md          ← Guía del workspace (leer al inicio)
+│   ├── USER.md            ← Perfil de JEFESITO
+│   ├── IDENTITY.md        ← Identidad de JUANITA
+│   ├── MEMORY.md          ← Memoria de largo plazo
+│   ├── SOUL.md            ← Esencia y personalidad
+│   ├── TOOLS.md           ← Rate limits y modelos
+│   ├── HEARTBEAT.md       ← Tareas periódicas
+│   ├── BACKUP_AUTO.md     ← Protocolo de backup
+│   ├── APRENDIZAJE_ACTIVO.md ← Sistema de aprendizaje
+│   └── BOOTSTRAP.md       ← Secuencia de arranque
 │
-├── 📁 config/            ← Configuración adicional
-│   └── openclaw.json     ← Copia del config de OpenClaw
+├── 📄 openclaw.json       ← Configuración principal de OpenClaw
+├── 📄 README.md           ← Este archivo
 │
-├── 📄 openclaw.json      ← Configuración principal de OpenClaw
-│
-├── 📁 scripts/           ← Scripts Python, JS, Bash
-│   ├── auto_commit_github.sh
-│   ├── backup-daemon.sh
-│   ├── backup_auto_md.py
-│   ├── install_juanita.sh
-│   ├── juanita_backup.sh
-│   ├── menu_backend.py
-│   ├── model_manager.sh
-│   └── ...
-│
-├── 📁 skills/            ← Skills activos (20 actualmente)
+├── 📁 skills/             ← Skills activos (20)
 │   ├── arquitecto/
 │   ├── auto-resolver/
 │   ├── brave/
@@ -64,96 +68,111 @@ Esta VM de Azure expira el **6 de marzo de 2026**. Es CRÍTICO migrar todo antes
 │   ├── voice/
 │   └── ...
 │
-├── 📁 skills_backup/     ← Skills en backup (896 total)
-│   └── ... (skills no activos)
+├── 📁 skills_backup/      ← Skills adicionales (896 total)
 │
-├── 📁 memory/            ← Memoria diaria
-│   ├── 2026-03-02.md
-│   ├── 2026-03-03.md
+├── 📁 scripts/            ← Scripts de utilidad
+│   ├── auto_commit_github.sh
+│   ├── backup_auto_md.py
+│   ├── juanita_backup.sh
+│   └── ...
+│
+├── 📁 memory/             ← Memoria diaria
 │   ├── 2026-03-04.md
-│   ├── fails/            ← Correcciones de errores
-│   ├── learnings/        ← Aprendizajes
-│   └── scoring/          ← Métricas
+│   ├── 2026-03-05.md
+│   └── ...
 │
-├── 📁 log_diario/        ← Registros diarios de actividades
+├── 📁 log_diario/         ← Logs de actividades
 │
-├── 📁 data/              ← Datos estructurados (CSVs, JSONs)
+├── 📁 data/               ← Datos estructurados
 │
-├── 📁 docs/              ← Documentación adicional (PDFs)
+├── 📁 docs/               ← Documentación adicional
 │
-├── 📁 documentos_pdf/    ← PDFs procesados
-│
-├── 📁 temp/              ← Archivos temporales (no se backup)
-│
-├── 📁 audio/             ← Archivos de audio (no se backup)
-│
-├── 📁 media/             ← Imágenes/videos (no se backup)
-│
-└── 📁 archive/           ← Archivos archivados
+└── 📁 temp/               ← Archivos temporales (no se backup)
 ```
 
 ---
 
-## Contenido del Backup
+## 🚀 Instrucciones de Instalación
 
-### Archivos incluidos
-- `openclaw.json` — Configuración principal de OpenClaw
-- Todos los archivos `.md` de configuración (raíz)
-- `skills/` — Skills activos
-- `skills_backup/` — Todos los skills disponibles
-- `scripts/` — Scripts de utilidad
-- `memory/` — Memoria diaria (sin backups duplicados)
-- `log_diario/` — Logs de actividades
-- `data/` — Datos estructurados
-- `documentos_pdf/` — PDFs procesados
+### Paso 1: Crear VM
 
-### Archivos EXCLUIDOS
-- `.env` — API keys (NVIDIA, GitHub, etc.)
-- `scripts/vosk-model-es/` — Modelo Vosk (1.2GB)
-- `temp/` — Archivos temporales
-- `audio/` — Archivos de audio
-- `media/` — Imágenes y videos
-- `memory/backup_md_*/` — Backups duplicados
+**Requisitos mínimos:**
+- Ubuntu 22.04 o 24.04
+- 4GB RAM mínimo (recomendado 8GB)
+- 50GB disco mínimo (recomendado 100GB)
+- Acceso SSH
 
----
+**Proveedores sugeridos:**
+- Google Cloud ($300 trial)
+- DigitalOcean ($200 credit)
+- Azure (student account)
+- AWS (free tier)
 
-## Instrucciones de Migración a Nueva VM
+### Paso 2: Instalar dependencias
 
-### Paso 1: Crear nueva VM
-- Proveedor sugerido: Google Cloud (con $300 trial) u otro VPS
-- Mínimo: 4GB RAM, 2 vCPU, 50GB disco
-- Recomendado: 8GB RAM, 4 vCPU, 100GB disco
-
-### Paso 2: Instalar OpenClaw
 ```bash
+# Actualizar sistema
+sudo apt update && sudo apt upgrade -y
+
 # Instalar Node.js 22
 curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
 sudo apt install -y nodejs
 
-# Instalar OpenClaw
+# Verificar instalación
+node --version  # debe mostrar v22.x.x
+npm --version
+
+# Instalar Python y venv
+sudo apt install -y python3 python3-pip python3-venv git curl wget
+
+# Instalar herramientas adicionales
+sudo apt install -y jq unzip
+```
+
+### Paso 3: Instalar OpenClaw
+
+```bash
+# Instalar OpenClaw globalmente
 npm install -g openclaw
 
+# Verificar instalación
+openclaw --version
+```
+
+### Paso 4: Clonar este backup
+
+```bash
 # Crear directorio de trabajo
 mkdir -p ~/.openclaw/workspace
-```
 
-### Paso 3: Clonar este repo
-```bash
+# Clonar el repo
 cd ~/.openclaw/workspace
-git clone https://github.com/JerryblackVe/JUANITA_FINAL.git .
-```
+git clone https://github.com/JerryblackVe/juanita_backup_mudanza.git .
 
-### Paso 4: Restaurar configuración
-```bash
 # Copiar openclaw.json a su ubicación
 cp openclaw.json ~/.openclaw/
+```
 
-# Crear archivo .env con las API keys
+### Paso 5: Crear entorno virtual
+
+```bash
+# Crear venv
+python3 -m venv ~/.openclaw/venv
+
+# Activar y instalar dependencias
+source ~/.openclaw/venv/bin/activate
+pip install --upgrade pip
+pip install requests python-dotenv openai
+```
+
+### Paso 6: Configurar API Keys
+
+```bash
+# Crear archivo .env
 nano ~/.openclaw/.env
 ```
 
-### Paso 5: Configurar API keys
-Crear/editar `~/.openclaw/.env`:
+Agregar las siguientes keys (ver sección [API Keys](#api-keys-necesarias)):
 ```
 NVIDIA_API_KEY=tu_key_aqui
 GITHUB_TOKEN=tu_token_aqui
@@ -161,71 +180,225 @@ BRAVE_API_KEY=tu_key_aqui
 SERPER_API_KEY=tu_key_aqui
 ```
 
-### Paso 6: Iniciar OpenClaw
+### Paso 7: Iniciar OpenClaw
+
 ```bash
-# Iniciar gateway
+# Iniciar el gateway
 openclaw gateway start
 
 # Verificar estado
 openclaw status
 ```
 
-### Paso 7: Descargar modelo Vosk (opcional, si se usa voice)
+### Paso 8: Configurar Telegram (si es necesario)
+
+Si necesitás reconectar el bot de Telegram:
+
+1. Ir a @BotFather en Telegram
+2. Usar `/newbot` o `/mybots`
+3. Obtener el token del bot
+4. Agregar a `openclaw.json` en la sección `providers.telegram`
+
+---
+
+## ⚙️ Configuración Post-Instalación
+
+### Verificar que todo funciona
+
 ```bash
-cd ~/.openclaw/workspace/scripts
-wget https://alphacephei.com/vosk/models/vosk-model-es-0.42.zip
-unzip vosk-model-es-0.42.zip
-mv vosk-model-es-0.42 vosk-model-es
-rm vosk-model-es-0.42.zip
+# Verificar gateway
+openclaw gateway status
+
+# Verificar que el bot responde
+# Enviar mensaje "hola" por Telegram
+
+# Verificar modelos
+openclaw models list
+```
+
+### Configurar backup automático
+
+```bash
+# El script de backup ya está en scripts/
+# Para ejecutar manualmente:
+cd ~/.openclaw/workspace
+python3 scripts/backup_auto_md.py
+
+# Para configurar cron (opcional):
+crontab -e
+# Agregar: 0 * * * * cd ~/.openclaw/workspace && python3 scripts/backup_auto_md.py
 ```
 
 ---
 
-## Modelos configurados (NVIDIA NIM)
+## 🔑 API Keys Necesarias
 
-| Alias | Modelo | Uso |
-|-------|--------|-----|
-| minimax-nvidia | minimax-m2.5 | Principal |
-| kimi-nvidia | kimi-k2-instruct | Thinking profundo |
-| qwen | qwen3.5-397b-a17b | Razonamiento |
-| glm5 | glm5 | Rápido |
+| Key | Para qué | Cómo obtenerla |
+|-----|----------|----------------|
+| **NVIDIA_API_KEY** | Modelos de IA (MiniMax, Qwen, Kimi) | https://build.nvidia.com/ |
+| **GITHUB_TOKEN** | Backups automáticos | https://github.com/settings/tokens |
+| **BRAVE_API_KEY** | Búsquedas web | https://brave.com/search/api/ |
+| **SERPER_API_KEY** | Búsquedas alternativas | https://serper.dev/ |
 
----
+### Cómo obtener cada key:
 
-## Skills activos (20)
+#### NVIDIA API Key
+1. Ir a https://build.nvidia.com/
+2. Crear cuenta / Log in
+3. Ir a "API Keys" en el dashboard
+4. Crear nueva key
+5. Copiar y guardar en `.env`
 
-- arquitecto
-- auto-resolver
-- autonomia_operativa
-- autonomous-saas
-- brave
-- context-guard
-- crawl4ai
-- deep-research
-- firecrawl-scraper
-- log-diario
-- mantenimiento
-- md-optimizer
-- pdf
-- prompt-enhancer
-- prompts-chat
-- scrapling
-- scrapy
-- skill-creator
-- speed
-- tmux
-- voice
-- zenrows
+#### GitHub Token
+1. Ir a https://github.com/settings/tokens
+2. "Generate new token (classic)"
+3. Seleccionar permisos: `repo`, `workflow`
+4. Generar y copiar
+
+#### Brave API Key
+1. Ir a https://brave.com/search/api/
+2. Sign up para API gratuita
+3. Copiar la key del dashboard
 
 ---
 
-## Contacto
+## 🤖 Modelos Disponibles
 
-- Usuario: JEFESITO (Gerardo Gonzalez)
-- Telegram: @GerardoNQ
-- Repo: https://github.com/JerryblackVe/JUANITA_FINAL
+JUANITA usa NVIDIA NIM para acceder a modelos de IA:
+
+| Alias | Modelo | Uso principal | Latencia |
+|-------|--------|---------------|----------|
+| `minimax-nvidia` | MiniMax M2.5 | Principal | ~600ms |
+| `kimi-nvidia` | Kimi K2 Instruct | Thinking profundo | ~27s |
+| `qwen` | Qwen 3.5 397B | Razonamiento | ~48s |
+| `glm5` | GLM 5 | Rápido | ~400ms |
+| `step-flash` | Step 3.5 Flash | Tareas rápidas | ~400ms |
+
+### Cambiar modelo
+
+```bash
+# Cambiar a modelo específico
+openclaw model set nvidia/minimaxai/minimax-m2.5
+
+# O usar alias en el chat
+# JEFESITO puede pedir cambiar modelo
+```
 
 ---
 
-*Backup generado: 2026-03-05*
+## 🧩 Skills Activos
+
+JUANITA tiene 20+ skills activos:
+
+| Skill | Función |
+|-------|---------|
+| `arquitecto` | Planificación de proyectos |
+| `auto-resolver` | Resolución de problemas |
+| `brave` | Búsquedas web |
+| `context-guard` | Monitoreo de tokens |
+| `deep-research` | Investigación profunda |
+| `log-diario` | Registro de actividades |
+| `mantenimiento` | Mantenimiento del sistema |
+| `md-optimizer` | Optimización de archivos .md |
+| `pdf` | Manejo de PDFs |
+| `prompt-enhancer` | Mejora de prompts |
+| `skill-creator` | Creación de skills |
+| `speed` | Test de latencia de modelos |
+| `tmux` | Control de sesiones tmux |
+| `voice` | Comunicación por voz |
+
+### Agregar más skills
+
+Los skills adicionales están en `skills_backup/`. Para activar:
+
+```bash
+# Mover skill de backup a activos
+mv ~/.openclaw/workspace/skills_backup/nombre-skill ~/.openclaw/workspace/skills/
+
+# Reiniciar OpenClaw para que detecte el nuevo skill
+openclaw gateway restart
+```
+
+---
+
+## 🔧 Solución de Problemas
+
+### El bot no responde en Telegram
+
+```bash
+# Verificar que el gateway está corriendo
+openclaw gateway status
+
+# Si no está corriendo
+openclaw gateway start
+
+# Verificar logs
+tail -f ~/.openclaw/logs/gateway.log
+```
+
+### Error: "API key not found"
+
+```bash
+# Verificar que .env existe
+cat ~/.openclaw/.env
+
+# Verificar formato correcto (sin espacios extra)
+# Debe ser: KEY=valor (no KEY = valor)
+```
+
+### Error: "Model not available"
+
+```bash
+# Verificar modelos disponibles
+openclaw models list
+
+# Verificar que la API key de NVIDIA está configurada
+echo $NVIDIA_API_KEY
+```
+
+### Git push falla
+
+```bash
+# Verificar que el token tiene permisos correctos
+# Necesita permiso 'repo' y 'workflow'
+
+# Reconfigurar remote con token
+cd ~/.openclaw/workspace
+git remote set-url origin https://TOKEN@github.com/JerryblackVe/juanita_backup_mudanza.git
+```
+
+### Backup automático no funciona
+
+```bash
+# Verificar que el script existe
+ls -la ~/.openclaw/workspace/scripts/backup_auto_md.py
+
+# Probar manualmente
+cd ~/.openclaw/workspace
+python3 scripts/backup_auto_md.py
+
+# Verificar permisos
+chmod +x ~/.openclaw/workspace/scripts/*.sh
+```
+
+---
+
+## 📞 Contacto
+
+- **Usuario:** JEFESITO (Gerardo Gonzalez)
+- **Telegram:** @GerardoNQ
+- **Repo:** https://github.com/JerryblackVe/juanita_backup_mudanza
+
+---
+
+## 📝 Notas de Versión
+
+- **Fecha de backup:** 2026-03-05
+- **Origen:** Azure VM (JUNITA)
+- **OpenClaw versión:** v2026.2.26
+- **Estado:** Listo para migración
+
+---
+
 *JUANITA — Asistente personal de JEFESITO*
+*Argentina | Español*
