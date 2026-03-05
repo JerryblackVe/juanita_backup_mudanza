@@ -1,0 +1,148 @@
+{
+  "meta": {
+    "lastTouchedVersion": "2026.2.26",
+    "lastTouchedAt": "2026-03-04T17:14:00.000Z"
+  },
+  "env": {
+    "NVIDIA_API_KEY": "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"
+  },
+  "auth": {
+    "profiles": {
+      "nvidia:default": {
+        "provider": "nvidia",
+        "mode": "api_key"
+      },
+      "minimax:default": {
+        "provider": "minimax",
+        "mode": "api_key"
+      }
+    }
+  },
+  "models": {
+    "mode": "merge",
+    "providers": {
+      "nvidia": {
+        "baseUrl": "https://integrate.api.nvidia.com/v1",
+        "apiKey": "${NVIDIA_API_KEY}",
+        "api": "openai-completions",
+        "models": [
+          {
+            "id": "minimaxai/minimax-m2.5",
+            "name": "MiniMax M2.5",
+            "reasoning": false,
+            "input": ["text"],
+            "cost": { "input": 0, "output": 0 },
+            "contextWindow": 131072,
+            "maxTokens": 8192
+          },
+          {
+            "id": "qwen/qwen3.5-397b-a17b",
+            "name": "Qwen 3.5 397B",
+            "reasoning": true,
+            "input": ["text"],
+            "cost": { "input": 0, "output": 0 },
+            "contextWindow": 131072,
+            "maxTokens": 16384
+          },
+          {
+            "id": "z-ai/glm5",
+            "name": "GLM5",
+            "reasoning": true,
+            "input": ["text"],
+            "cost": { "input": 0, "output": 0 },
+            "contextWindow": 131072,
+            "maxTokens": 16384
+          },
+          {
+            "id": "moonshotai/kimi-k2.5",
+            "name": "Kimi K2.5",
+            "reasoning": true,
+            "input": ["text"],
+            "cost": { "input": 0, "output": 0 },
+            "contextWindow": 131072,
+            "maxTokens": 16384
+          },
+          {
+            "id": "stepfun-ai/step-3.5-flash",
+            "name": "Step 3.5 Flash",
+            "reasoning": true,
+            "input": ["text"],
+            "cost": { "input": 0, "output": 0 },
+            "contextWindow": 131072,
+            "maxTokens": 16384
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "nvidia/minimaxai/minimax-m2.5"
+      },
+      "models": {
+        "nvidia/minimaxai/minimax-m2.5": {
+          "alias": "minimax-nvidia"
+        },
+        "nvidia/qwen/qwen3.5-397b-a17b": {
+          "alias": "qwen"
+        },
+        "nvidia/z-ai/glm5": {
+          "alias": "glm5"
+        },
+        "nvidia/moonshotai/kimi-k2.5": {
+          "alias": "kimi-k2.5"
+        },
+        "nvidia/stepfun-ai/step-3.5-flash": {
+          "alias": "step-flash"
+        }
+      },
+      "workspace": "/home/azureuser/.openclaw/workspace",
+      "compaction": { "mode": "safeguard" },
+      "maxConcurrent": 4,
+      "subagents": { "maxConcurrent": 8 }
+    },
+    "list": [
+      {
+        "id": "investigador",
+        "model": "nvidia/minimaxai/minimax-m2.5"
+      }
+    ]
+  },
+  "messages": { "ackReactionScope": "group-mentions" },
+  "commands": { "native": "auto", "nativeSkills": "auto", "restart": true, "ownerDisplay": "raw" },
+  "session": { "dmScope": "per-channel-peer" },
+  "hooks": {
+    "internal": {
+      "enabled": true,
+      "entries": {
+        "boot-md": { "enabled": true },
+        "session-memory": { "enabled": true }
+      }
+    }
+  },
+  "channels": {
+    "telegram": {
+      "enabled": true,
+      "dmPolicy": "pairing",
+      "botToken": "8615278288:AAEbRfBWVXk0q-VEE4DcDBVUomX-7yXO5_s",
+      "groupPolicy": "allowlist",
+      "streaming": "off"
+    }
+  },
+  "gateway": {
+    "port": 1685,
+    "mode": "local",
+    "bind": "loopback",
+    "auth": { "mode": "token", "token": "5c6bdab1fb9f187bf9dc73cc931b76976cc45e8b836e46c6" },
+    "tailscale": { "mode": "off", "resetOnExit": false },
+    "nodes": {
+      "denyCommands": ["camera.snap", "camera.clip", "screen.record", "calendar.add", "contacts.add", "reminders.add"]
+    }
+  },
+  "plugins": {
+    "entries": {
+      "telegram": { "enabled": true }
+    }
+  }
+}
