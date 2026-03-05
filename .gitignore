@@ -1,1 +1,21 @@
+# Archivos grandes
 scripts/vosk-model-es/
+
+# API keys
+.env
+
+# Backups duplicados (se generan automáticamente)
+memory/backup_md_*/
+
+# Archivos temporales
+temp/
+audio/
+media/
+
+# Logs grandes
+*.log
+log_diario/backup-daemon.log
+
+# Cache
+__pycache__/
+*.pyc
