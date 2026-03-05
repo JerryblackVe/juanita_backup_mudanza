@@ -1,0 +1,44 @@
+{
+  "models": {
+    "primary": {
+      "name": "m1",
+      "endpoint": "https://api.openai.com/v1/chat/completions",
+      "api_key": "sk-proj-sample-primary-key",
+      "model": "gpt-4o",
+      "max_tokens": 4096,
+      "description": "Modelo primario OpenAI GPT-4o"
+    },
+    "fallback": {
+      "name": "m2",
+      "endpoint": "https://api.anthropic.com/v1/messages",
+      "api_key": "sk-ant-api03-sample-fallback-key",
+      "model": "claude-3-5-sonnet-20241022",
+      "max_tokens": 4096,
+      "description": "Modelo fallback Anthropic Claude"
+    },
+    "models": [
+      {
+        "name": "m1",
+        "active": true,
+        "type": "primary"
+      },
+      {
+        "name": "m2",
+        "active": true,
+        "type": "fallback"
+      }
+    ]
+  },
+  "tokens": {
+    "m1": {
+      "used": 15000,
+      "limit": 500000,
+      "reset": "2026-03-01"
+    },
+    "m2": {
+      "used": 8500,
+      "limit": 400000,
+      "reset": "2026-03-01"
+    }
+  }
+}

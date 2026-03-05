@@ -1,0 +1,9 @@
+{
+  "name": "autonomous-saas",
+  "description": "Genera proyectos SaaS completos usando APIs de IA. Actívate cuando el usuario quiera crear un proyecto web, SaaS, API, dashboard o landing page.",
+  "risk": "safe",
+  "requires": {
+    "network": true
+  },
+  "workflow": "autonomous-saas-builder"
+}

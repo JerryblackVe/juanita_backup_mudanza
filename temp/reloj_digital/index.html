@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reloj Vintage Digital 2.0</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Paleta Cyberpunk 80s */
+            --cyber-bg: #0F0F0F;
+            --cyber-primary: #4C00FF;
+            --cyber-secondary: #EE00FF;
+            --cyber-accent: #FF0099;
+            --cyber-gray: #232323;
+            --cyber-glow: rgba(76, 0, 255, 0.6);
+            --cyber-text: #FF0099;
+            --cyber-digits: #4C00FF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', monospace;
+            background: var(--cyber-bg);
+            color: var(--cyber-text);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Fondo con imagen del usuario */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('fondo_reloj.jpg') center/cover no-repeat;
+            opacity: 0.4;
+            z-index: 0;
+            filter: brightness(0.3)
+                    hue-rotate(200deg)
+                    saturate(1.5)
+                    contrast(1.2);
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 60px;
+            padding: 40px;
+            max-width: 100%;
+            width: 100%;
+        }
+
+        /* Selector de ciudad - ARRIBA */
+        .city-selector {
+            background: linear-gradient(135deg, var(--cyber-gray), #0a0a0a);
+            border: 3px solid var(--cyber-primary);
+            border-radius: 20px;
+            padding: 25px 50px;
+            box-shadow: 
+                0 0 30px var(--cyber-glow),
+                inset 0 0 30px rgba(76, 0, 255, 0.1);
+            min-width: 500px;
+            text-align: center;
+        }
+
+        .city-selector label {
+            color: var(--cyber-accent);
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-right: 20px;
+            text-shadow: 0 0 15px var(--cyber-accent);
+        }
+
+        .city-selector select {
+            background: var(--cyber-bg);
+            border: 2px solid var(--cyber-primary);
+            color: var(--cyber-text);
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 1.3rem;
+            font-weight: bold;
+            padding: 12px 25px;
+            border-radius: 12px;
+            cursor: pointer;
+            outline: none;
+            text-shadow: 0 0 8px var(--cyber-text);
+            box-shadow: 0 0 20px rgba(255, 0, 153, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .city-selector select:hover {
+            border-color: var(--cyber-accent);
+            box-shadow: 0 0 30px rgba(255, 0, 153, 0.7);
+            transform: scale(1.05);
+        }
+
+        /* Reloj digital 80s - 200% más grande */
+        .digital-clock80 {
+            background: linear-gradient(145deg, #0a0a0a, var(--cyber-bg));
+            border: 8px solid var(--cyber-primary);
+            border-radius: 30px;
+            padding: 80px 100px;
+            box-shadow: 
+                0 0 50px var(--cyber-glow),
+                0 20px 80px rgba(0, 0, 0, 0.8),
+                inset 0 0 100px rgba(0, 0, 0, 0.4);
+            position: relative;
+            min-width: 600px;
+        }
+
+        .digital-clock80::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            right: -4px;
+            bottom: -4px;
+            background: linear-gradient(45deg, var(--cyber-primary), var(--cyber-secondary), var(--cyber-accent), var(--cyber-primary));
+            border-radius: 32px;
+            z-index: -1;
+            animation: borderGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes borderGlow {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.8; }
+        }
+
+        .time-display80 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .digit-group80 {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .digit80 {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 8rem;
+            font-weight: 900;
+            color: var(--cyber-digits);
+            text-shadow: 
+                0 0 40px var(--cyber-digits),
+                0 0 80px var(--cyber-secondary),
+                0 0 120px var(--cyber-accent);
+            background: rgba(0, 0, 0, 0.6);
+            padding: 20px 30px;
+            border-radius: 15px;
+            border: 3px solid rgba(255, 0, 153, 0.4);
+            min-width: 120px;
+            text-align: center;
+            position: relative;
+            letter-spacing: 3px;
+        }
+
+        .digit80::after {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            height: 40%;
+            background: linear-gradient(180deg, rgba(255,255,255,0.2) 0%, transparent 100%);
+            border-radius: 8px;
+            opacity: 0.5;
+        }
+
+        .colon {
+            font-size: 7rem;
+            color: var(--cyber-accent);
+            animation: pulse 1s infinite;
+            text-shadow: 0 0 40px var(--cyber-accent);
+            font-weight: bold;
+        }
+
+        @keyframes pulse {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.3; }
+        }
+
+        .clock-info {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-top: 30px;
+        }
+
+        .info-item {
+            text-align: center;
+        }
+
+        .info-label {
+            font-size: 0.9rem;
+            color: var(--cyber-secondary);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .info-value {
+            font-size: 1.5rem;
+            color: var(--cyber-primary);
+            text-shadow: 0 0 20px var(--cyber-primary);
+            margin-top: 8px;
+            font-family: 'Orbitron', monospace;
+            font-weight: 400;
+        }
+
+        /* Reloj analógico separado */
+        .analog-clock {
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--cyber-gray), var(--cyber-bg));
+            border: 12px solid var(--cyber-primary);
+            box-shadow: 
+                0 0 30px var(--cyber-glow),
+                0 10px 40px rgba(0, 0, 0, 0.7),
+                inset 0 0 50px rgba(0, 0, 0, 0.5);
+            position: relative;
+            margin-top: 40px;
+        }
+
+        .analog-clock::before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            right: -15px;
+            bottom: -15px;
+            border-radius: 50%;
+            border: 4px solid var(--cyber-accent);
+            box-shadow: 0 0 25px rgba(238, 0, 255, 0.3);
+        }
+
+        .

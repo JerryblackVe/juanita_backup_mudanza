@@ -1,0 +1,15 @@
+{
+  "_comment": "Límites de contexto por modelo en tokens",
+  "models": {
+    "nvidia/minimaxai/minimax-m2.1": {"context_window": 196608, "alert_threshold": 0.75, "critical_threshold": 0.85},
+    "nvidia/deepseek-ai/deepseek-v3.2": {"context_window": 65536, "alert_threshold": 0.70, "critical_threshold": 0.80},
+    "askcodi/moonshotai/kimi-k2.5": {"context_window": 200000, "alert_threshold": 0.75, "critical_threshold": 0.85},
+    "nvidia/stepfun-ai/step-3.5-flash": {"context_window": 128000, "alert_threshold": 0.70, "critical_threshold": 0.80},
+    "groq/llama-3.3-70b-versatile": {"context_window": 128000, "alert_threshold": 0.70, "critical_threshold": 0.80},
+    "groq/openai/gpt-oss-120b": {"context_window": 128000, "alert_threshold": 0.75, "critical_threshold": 0.85},
+    "groq/openai/gpt-oss-20b": {"context_window": 128000, "alert_threshold": 0.75, "critical_threshold": 0.85},
+    "default": {"context_window": 128000, "alert_threshold": 0.75, "critical_threshold": 0.85}
+  },
+  "check_interval_minutes": 30,
+  "silent_mode": true
+}
